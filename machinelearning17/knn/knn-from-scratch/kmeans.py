@@ -6,7 +6,7 @@ class KMeans:
         self.n_clusters=n_clusters
         self.max_iter=max_iter
         self.centroids=None
-        # self.wcss=None
+        self.wcss=None
 
     def fit_predict(self,X):
         # print(X)
@@ -44,3 +44,10 @@ class KMeans:
         for type in cluster_type:
             new_centroids.append(X[cluster_group==type].mean(axis=0))
         return np.array(new_centroids)
+    
+    def calculate_wcss(self,X,cluster_group):
+        wcss=0
+        for i,centroid in enumerate(self.centroids):
+            cluster_points=X[cluster_group==i]
+            wcss+=np.sum((cluster_points-centroid)**2)
+        return wcss
